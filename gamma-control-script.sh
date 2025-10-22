@@ -1,9 +1,18 @@
 #!/bin/bash
 
+LGREEN='\033[1;32m'
+NORMAL='\033[0m'	
+
 S=0.7
 
-COF='\e[?25l' #Cursor Off                                            |
-CON='\e[?25h' #Cursor On   
+COF='\e[?25l' #Cursor Off
+#переменная COF используется для хранения управляющей последовательности, которая отключает отображение курсора в терминале.
+#Подробности о последовательности
+
+    #\e: Это Escape-символ, который указывает, что за ним следует управляющая последовательность.
+    #[?25l: Этот код говорит терминалу скрыть курсор.
+
+CON='\e[?25h' #Cursor On
 
 cursor(){
     case $1 in
@@ -75,23 +84,27 @@ read_input(){
     esac
 }
 
-
 main ()
 {
 	clear
+	#tput setf 1
+	echo -e ${LGREEN}
 	xgamma
+	echo -e ${NORMAL}
+
 	echo 1 - увеличить
 	echo 2 - уменьшить
-	#echo S=0.$S
-	echo S=$S
+	
+	echo - 0.$S +
   
 	read_input
+	
 	case $_input_ in
-		1 | w | d | up | pgup)
+		1 | w | d | up | right | pgup)
 			up_f
 			;;
 			
-		2 | s | a | down | pgdown)
+		2 | s | a | down | left | pgdown)
 			down_f
 			;;
 		escape ) 
